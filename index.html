@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🚀 Entering TiffyAI Blockchain Storm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00f0ff;
+    }
+
+    #messageBox {
+      width: 90%;
+      max-width: 600px;
+      font-size: 1.2rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      border: 1px solid rgba(0,240,255,0.4);
+      border-radius: 12px;
+      padding: 20px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 20px rgba(0,240,255,0.7);
+    }
+
+    #enteringGif {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      display: none; /* hidden until after message */
+    }
+  </style>
+</head>
+<body>
+
+  <div id="messageBox"></div>
+
+  <img
+    id="enteringGif"
+    src="https://tiffyai.github.io/Blockchain-Storm-AR-VR-/BlockchainStorm.gif"
+    alt="Entering Blockchain Storm"
+  />
+
+  <script>
+    const message = 
+`🌍 The 3 Hour Challenge is LIVE with other players around the world!  
+💥 Tap the rock blocks to OBLIVIATE them before they send you to oblivion!  
+⚡ The first 10 people to withdraw within the 3-hour limit win 50 scarce TIFFY tokens.  
+👑 The WINNER walks away with 200 scarce TIFFY gems when the bar resets!  
+🔥 ENJOY the Blockchain Storm!`;
+
+    const messageBox = document.getElementById("messageBox");
+    const gif = document.getElementById("enteringGif");
+
+    let i = 0;
+    function typeWriter() {
+      if (i < message.length) {
+        messageBox.innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 30); // typing speed
+      } else {
+        // Finished typing, wait 3s then show gif
+        setTimeout(() => {
+          messageBox.style.display = "none";
+          gif.style.display = "block";
+
+          // After gif shows, wait 3s then redirect
+          setTimeout(() => {
+            const chromeIntent = 'intent://tiffyai.github.io/Tiffyverse/#Intent;scheme=https;package=com.android.chrome;end';
+            window.location.href = chromeIntent;
+          }, 3000);
+
+        }, 3000);
+      }
+    }
+
+    // Start typing on load
+    window.onload = typeWriter;
+  </script>
+
+</body>
+</html>
