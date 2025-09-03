@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🚀 Entering TiffyAI Blockchain Storm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00f0ff;
+    }
+
+    #messageBox {
+      width: 90%;
+      max-width: 600px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      border: 1px solid rgba(0,240,255,0.4);
+      border-radius: 12px;
+      padding: 20px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 20px rgba(0,240,255,0.7);
+    }
+
+    #typedMessage {
+      margin-bottom: 10px;
+    }
+
+    #onlineCount {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #00ffaa;
+    }
+
+    #winnersList {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #ffaa00;
+      white-space: pre-wrap;
+    }
+
+    #enteringGif {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      display: none; /* hidden until after message */
+    }
+  </style>
+</head>
+<body>
+
+  <div id="messageBox">
+    <div id="typedMessage"></div>
+    <div id="onlineCount"></div>
+    <div id="winnersList"></div>
+  </div>
+
+  <img
+    id="enteringGif"
+    src="https://tiffyai.github.io/Blockchain-Storm-AR-VR-/BlockchainStorm.gif"
+    alt="Entering Blockchain Storm"
+  />
+
+  <script>
+    const typedMessage = document.getElementById("typedMessage");
+    const onlineCountEl = document.getElementById("onlineCount");
+    const winnersListEl = document.getElementById("winnersList");
+    const gif = document.getElementById("enteringGif");
+
+    const message = 
+`🌍 The 3 HOUR Challenge is LIVE with Players Around the World!  
+💥 Tap the rock blocks to OBLIVIATE them before they send you to oblivion!  
+⚡ The first 10 people to withdraw within the 3-hour limit win 50 scarce TIFFY tokens.  
+👑 The WINNER walks away with EVERYONE'S Unclaimed Scarce TIFFY Gems when your Progress Bar Resets!  
+🔥 Conquer the Blockchain Storm!`;
+
+    /***********************
+     * Online player count
+     ***********************/
+    let onlineCount = 250 + Math.floor(Math.random() * 200);
+    function updateOnlineCount() {
+      const change = Math.floor(Math.random() * 11) - 5; // -5 to +5
+      onlineCount = Math.max(50, onlineCount + change);
+      onlineCountEl.textContent = `👥 ${onlineCount} Players Online Now`;
+    }
+    setInterval(updateOnlineCount, 2000);
+    updateOnlineCount();
+
+    /***********************
+     * Winners list
+     ***********************/
+    const fallbackNames = [
+      "NeoStorm","BlockCrusher","SkyRaider","TiffHunter",
+      "OblivionX","CryptoKnight","LunaBlast","VRMaster",
+      "ChainBreaker","StormChaser"
+    ];
+
+    function displayWinners() {
+      const realWinners = JSON.parse(localStorage.getItem("winnersHistory") || "[]");
+
+      if (realWinners.length > 0) {
+        let text = "🏆 Last 10 Winners:\n";
+        realWinners.forEach(w => {
+          const minsAgo = Math.floor((Date.now() - w.time) / 60000);
+          text += `• ${w.name} — ${minsAgo} min ago\n`;
+        });
+        winnersListEl.textContent = text;
+      } else {
+        // fallback mock data
+        let text = "🏆 Last 10 Winners:\n";
+        for (let i = 0; i < 10; i++) {
+          const name = fallbackNames[Math.floor(Math.random() * fallbackNames.length)];
+          const minsAgo = Math.floor(Math.random() * 55) + 1;
+          text += `• ${name} — ${minsAgo} min ago\n`;
+        }
+        winnersListEl.textContent = text;
+      }
+    }
+    displayWinners();
+
+    /***********************
+     * Typewriter effect
+     ***********************/
+    let i = 0;
+    function typeWriter() {
+      if (i < message.length) {
+        typedMessage.innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 30); // typing speed
+      } else {
+        // Finished typing, wait 3s then show gif
+        setTimeout(() => {
+          document.getElementById("messageBox").style.display = "none";
+          gif.style.display = "block";
+
+          // After gif shows, wait 3s then redirect
+          setTimeout(() => {
+            const chromeIntent = 'intent://tiffyai.github.io/Tiffyverse/#Intent;scheme=https;package=com.android.chrome;end';
+            window.location.href = chromeIntent;
+          }, 3000);
+
+        }, 3000);
+      }
+    }
+
+    // Start typing on load
+    window.onload = typeWriter;
+  </script>
+
+</body>
+</html>
